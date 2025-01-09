@@ -1,21 +1,17 @@
-from selenium.webdriver.common.by import By
 from behave import given, when, then
 from time import sleep
 
 @given("open the target page")
 def open_main(context):
-    context.driver.get('https://www.target.com/')
+    context.app.main_page.open_main()
 
 @when('search for {Search_Product}')
 def search_product(context,Search_Product):
-    context.driver.find_element(By.ID,'search').send_keys(Search_Product)
-    context.driver.find_element(By.XPATH, "//button[@data-test='@web/Search/SearchButton']").click()
+    context.app.header.search_product(Search_Product)
 
-@then('i should see the results')
-def i_should_see(context):
-    expected_result = 'table'
-    actual_result = context.driver.find_element(By.XPATH,"//span[@class='h-text-bs h-display-flex h-flex-align-center h-text-grayDark h-margin-l-x2']").text
-    assert expected_result in actual_result, f'expected{expected_result} did not match actually actual{actual_result}'
+@then('i should see the results for {Search_Product}')
+def i_should_see(context,Search_Product):
+    context.app.search_results_page.verify_search_results(Search_Product)
     print('passed')
 
 sleep(5)

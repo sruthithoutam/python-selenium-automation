@@ -4,5 +4,5 @@ Feature:  Product Search on Target
 
   Scenario: Search for a product and verify results
   Given open the target page
-  When search for table
-  Then i should see the results
+  When search for mug
+  Then i should see the results for mug
